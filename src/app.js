@@ -21,8 +21,8 @@ app.post('/accounts', (request, response) => {
   return response.status(201).send();
 });
 
-app.get('/accounts/statement/:cpf', (request, response) => {
-  const { cpf } = request.params;
+app.get('/accounts/statement', (request, response) => {
+  const { cpf } = request.headers;
 
   const customer = customers.find(findCustomer => findCustomer.cpf === cpf);
 
