@@ -21,6 +21,18 @@ app.post('/accounts', (request, response) => {
   return response.status(201).send();
 });
 
+app.get('/accounts/statement/:cpf', (request, response) => {
+  const { cpf } = request.params;
+
+  const customer = customers.find(findCustomer => findCustomer.cpf === cpf);
+
+  if (!customer) {
+    return response.status(400).json({ error: 'Account not found' });
+  }
+
+  return response.json(customer.statement);
+});
+
 app.listen(process.env.APP_PORT, () => {
   console.log(`Server started on port ${process.env.APP_PORT}`);
 });
