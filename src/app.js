@@ -43,6 +43,22 @@ app.get('/accounts/statement', (request, response) => {
   return response.json(customer.statement);
 });
 
+app.post('/accounts/deposit', (request, response) => {
+  const { customer } = request;
+  const { description, amount } = request.body;
+
+  const statmentOperation = {
+    description,
+    amount,
+    created_at: new Date(),
+    type: 'credit',
+  };
+
+  customer.statement.push(statmentOperation);
+
+  return response.status(201).send();
+});
+
 app.listen(process.env.APP_PORT, () => {
   console.log(`Server started on port ${process.env.APP_PORT}`);
 });
