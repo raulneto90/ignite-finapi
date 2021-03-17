@@ -95,6 +95,21 @@ app.post('/accounts/withdraw', (request, response) => {
   return response.status(201).send();
 });
 
+app.get('/accounts/statement/date', (request, response) => {
+  const { customer } = request;
+  const { date } = request.query;
+
+  const dateFormatted = new Date(`${date} 00:00`);
+
+  const statement = customer.statement.filter(
+    findStatement =>
+      findStatement.created_at.toDateString() ===
+      new Date(dateFormatted).toDateString(),
+  );
+
+  return response.json(statement);
+});
+
 app.listen(process.env.APP_PORT, () => {
   console.log(`Server started on port ${process.env.APP_PORT}`);
 });
