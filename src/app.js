@@ -110,6 +110,21 @@ app.get('/accounts/statement/date', (request, response) => {
   return response.json(statement);
 });
 
+app.put('/accounts', (request, response) => {
+  const { name } = request.body;
+  const { customer } = request;
+
+  customer.name = name;
+
+  return response.status(201).send();
+});
+
+app.get('/accounts', (request, response) => {
+  const { customer } = request;
+
+  return response.json(customer);
+});
+
 app.listen(process.env.APP_PORT, () => {
   console.log(`Server started on port ${process.env.APP_PORT}`);
 });
