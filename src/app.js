@@ -125,6 +125,22 @@ app.get('/accounts', (request, response) => {
   return response.json(customer);
 });
 
+app.delete('/accounts', (request, response) => {
+  const { customer } = request;
+
+  customers.splice(customer, 1);
+
+  return response.status(204).send();
+});
+
+app.get('/accounts/balance', (request, response) => {
+  const { customer } = request;
+
+  const balance = getBalance(customer.statement);
+
+  return response.json(balance);
+});
+
 app.listen(process.env.APP_PORT, () => {
   console.log(`Server started on port ${process.env.APP_PORT}`);
 });
